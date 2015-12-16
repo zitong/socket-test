@@ -35,13 +35,14 @@ int main(int argc, const char * argv[]) {
     
     listen(serverSocket, 20);
     while (true) {
-        struct sockaddr clientAddr;
+        struct sockaddr_in clientAddr;
         socklen_t addr_length;
-        int clientSocket = accept(serverSocket, &clientAddr, &addr_length);
+        int clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &addr_length);
         
         char readBuffer[2048];
         ssize_t ln = recv(clientSocket, readBuffer, 1024, MSG_WAITALL);
         printf("%s, %d\n",readBuffer, (int)ln);
+        close(clientSocket);
     }
     return 0;
 }
