@@ -32,6 +32,7 @@ int main(int argc, const char * argv[]) {
         printf("connect socket faild!");
         return -1;
     }
+    
     const char * sendBuffer = "Hello world!!!";
     ssize_t sRet = send(clientSocket, sendBuffer, strlen(sendBuffer), 0);
     if (sRet < 0){

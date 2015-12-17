@@ -7,13 +7,14 @@
 //
 
 #include <iostream>
-#include <iostream>
 #include <sys/socket.h>
 #include <sys/netport.h>
 #include <string>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/ioctl.h>
+
 int main(int argc, const char * argv[]) {
 	
     int serverSocket = socket(PF_INET, SOCK_STREAM, 0);
@@ -36,10 +37,17 @@ int main(int argc, const char * argv[]) {
     listen(serverSocket, 20);
     while (true) {
         struct sockaddr_in clientAddr;
-        socklen_t addr_length;
+        socklen_t addr_length = sizeof(struct sockaddr_in);  ;
         int clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &addr_length);
-        
-        char readBuffer[2048];
+        sleep(1);
+        char *clientIp = inet_ntoa(clientAddr.sin_addr);
+        printf("client:(%s) connect\n",clientIp);
+        const char * sendBuffer = "Hello world!!!";
+        send(clientSocket, sendBuffer, strlen(sendBuffer), 0);
+        long result;
+        ioctl(clientSocket, FIONREAD, &result);
+        printf("socket buffer size: %ld\n",result);
+        char readBuffer[1024];
         ssize_t ln = recv(clientSocket, readBuffer, 1024, MSG_WAITALL);
         printf("%s, %d\n",readBuffer, (int)ln);
         close(clientSocket);
