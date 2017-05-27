@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/lichenyang/ClionProjects/SelectServer/main.cpp
+iostream
+-
+sys/socket.h
+-
+sys/netport.h
+-
+string
+-
+sys/types.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+sys/ioctl.h
+-
+unistd.h
+-
+sys/select.h
+-
+stdio.h
+-
+vector
+-
+fcntl.h
+-
+
